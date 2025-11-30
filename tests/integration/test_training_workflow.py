@@ -3,6 +3,7 @@ import sys
 from pathlib import Path
 
 from simple_linear_regression import LinearRegressionGD
+from demo_usage import run_demo
 
 
 def test_end_to_end_training_and_prediction():
@@ -20,11 +21,19 @@ def test_end_to_end_training_and_prediction():
 def test_demo_script_runs_via_subprocess():
     repo_root = Path(__file__).resolve().parents[2]
     result = subprocess.run(
-        [sys.executable, "src/demo_usage.py"],
+        [sys.executable, "src/demo_usage.py", "--learning-rate", "0.1", "--epochs", "800", "--predict-x", "7"],
         cwd=repo_root,
         capture_output=True,
         text=True,
         check=True,
     )
     output_lines = result.stdout.strip().splitlines()
-    assert len(output_lines) == 3
+    assert len(output_lines) == 4
+    assert output_lines[0].startswith("Training points:")
+
+
+def test_demo_function_respects_overrides():
+    metrics = run_demo(learning_rate=0.1, epochs=600, predict_x=9)
+    assert 2.5 < metrics["slope"] < 3.5
+    assert 1.5 < metrics["intercept"] < 2.5
+    assert metrics["prediction"] > 0
