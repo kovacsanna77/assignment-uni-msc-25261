@@ -21,6 +21,13 @@ def test_mean_squared_error_raises_on_length_mismatch():
         model.mean_squared_error([0], [1, 2])
 
 
+def test_is_fitted_flags_training_state():
+    model = LinearRegressionGD()
+    assert model.is_fitted() is False
+    model.fit([0, 1], [1, 3])
+    assert model.is_fitted() is True
+
+
 def test_parameters_converge_on_simple_line():
     x = [0, 1, 2, 3]
     y = [1, 3, 5, 7]  # y = 2x + 1

@@ -48,5 +48,9 @@ class LinearRegressionGD:
             raise RuntimeError("model has not been fitted")
         return self._intercept, self._slope
 
+    def is_fitted(self) -> bool:
+        """Return whether the model has been trained."""
+        return self._fitted
+
     def _predict_one(self, x_value: float) -> float:
         return self._intercept + self._slope * x_value
