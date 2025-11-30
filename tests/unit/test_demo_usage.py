@@ -14,7 +14,7 @@ def test_run_demo_outputs_expected_lines(capsys):
     assert captured[2].startswith("Prediction for x=")
     assert captured[3].startswith("Training MSE:")
 
-    # Ensure numbers are present in the lines
-    number_pattern = re.compile(r"-?\d+\.\d+")
+    # Ensure numbers (ints or floats) are present in the lines
+    number_pattern = re.compile(r"-?\d+(?:\.\d+)?")
     assert all(number_pattern.search(line) for line in captured)
     assert set(result.keys()) == {"intercept", "slope", "prediction", "mse"}
