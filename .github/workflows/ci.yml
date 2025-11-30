@@ -30,7 +30,7 @@ jobs:
   integration:
     name: Integration tests
     needs: unit
-    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+    if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
